@@ -53,3 +53,14 @@ after this all the changes you have done in vs code will get pushed to git hub r
 // now when your code is in git hub ... go to vercel site and deploy your fronted code on vercel
 
 
+
+
+.... in the last ,,, to deploy frontend on vercil .. we have to add a file name "vercel.json" in my frontend project and content will be 
+
+{
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/"}
+  ]
+}
+
+
