@@ -99,6 +99,7 @@ blogRouter.put('/', async (c) => {
 
 // returning all the blogs ,, but not all the contect .. just the title 
 blogRouter.get('/bulk', async (c) => {
+    
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
@@ -127,6 +128,7 @@ blogRouter.get('/bulk', async (c) => {
 blogRouter.get('/:id', async (c) => {
 
     const id = c.req.param("id");
+    
 
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -136,7 +138,7 @@ blogRouter.get('/:id', async (c) => {
 
         const blog = await prisma.post.findFirst({
             where: {
-                authorId: Number(id)
+                id: Number(id)
             },
             select: {
                 id: true,
@@ -149,7 +151,7 @@ blogRouter.get('/:id', async (c) => {
                 }
             }
         })
-
+        
         return c.json({
             blog
         })

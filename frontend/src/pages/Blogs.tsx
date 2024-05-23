@@ -4,6 +4,7 @@ import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks"
 
 export const Blogs = () => {
+    
     const { loading, blogs } = useBlogs();
     if (loading) {
         return <div>

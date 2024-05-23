@@ -26,7 +26,7 @@ export const useBlog=({id}:{id:string})=>{
             }
         })
             .then(response => {
-                console.log(response.data.blog);
+                // console.log(response.data.blog);
                 setBlog(response.data.blog);
                 // console.log(blog)
                 setLoading(false);

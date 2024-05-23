@@ -17,7 +17,7 @@ export const Auth = ({type}:{type:"signup" | "signin"}) => {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type=="signup" ? "signup":"signin"}`, postInputs)
             // the jwt stored in local storage is in object format .. so we to acces jwt token we have to do response.data.jwt;
             const jwt = response.data.jwt;
-            console.log(jwt)
+           
             
             localStorage.setItem("token" ,jwt)
             navigate("/blogs")

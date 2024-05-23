@@ -13,7 +13,9 @@ export const Blog = () => {
     const { loading, blog } = useBlog({
         id: id || ""
     });
+    
     if (loading || !blog) {
+        
         return <div>
             <Appbar></Appbar>
             <div className="h-screen flex-col justify-center">
