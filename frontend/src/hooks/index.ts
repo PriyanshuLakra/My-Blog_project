@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 
 export interface Blog{
@@ -55,6 +55,52 @@ export const useBlogs = () => {
         })
             .then(response => {
                 setBlogs(response.data.blogs);
+                setLoading(false);
+            })
+    }, [])
+
+    return {
+        loading,
+        blogs
+    }
+}
+
+
+
+interface UserPayload extends JwtPayload {
+    id: string;
+  }
+export const getUserInfoFromToken = (): UserPayload | null =>{
+
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const decodedToken = jwtDecode<UserPayload>(token)
+      return decodedToken; // returns the entire payload object
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
+  }
+  return null;
+};
+
+
+export const useMyBlogs = () => {
+    const [loading, setLoading] = useState(true);
+    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const userInfo = getUserInfoFromToken();
+    const userId = userInfo ? userInfo.id : null;
+    
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/myBlogs/${userId}`, {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+            .then(response => {
+                
+                setBlogs(response.data.blog);
                 setLoading(false);
             })
     }, [])

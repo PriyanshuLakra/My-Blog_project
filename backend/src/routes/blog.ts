@@ -124,6 +124,8 @@ blogRouter.get('/bulk', async (c) => {
     
 })
 
+
+
 // getting a particular blog
 blogRouter.get('/:id', async (c) => {
 
@@ -162,3 +164,45 @@ blogRouter.get('/:id', async (c) => {
         })
     }
 })
+
+
+blogRouter.get('/myBlogs/:id', async (c) => {
+
+    const id = c.req.param("id");
+    
+    
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    try {
+
+        const blog = await prisma.post.findMany({
+            where: {
+                authorId: Number(id)
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
+        
+        return c.json({
+            blog
+        })
+    } catch (e) {
+        c.status(411);
+        return c.json({
+            message: "Error while fetching the "
+        })
+    }
+})
+
+
+
