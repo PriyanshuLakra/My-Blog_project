@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@priyanshulakra/medium-common": "^1.0.0",
+    "@types/jwt-decode": "^3.1.0",
     "axios": "^1.7.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1"
