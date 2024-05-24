@@ -4,6 +4,7 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { createPostInput, updatePostInput } from "@priyanshulakra/medium-common";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import { userRouter } from "./users";
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -200,6 +201,31 @@ blogRouter.get('/myBlogs/:id', async (c) => {
         c.status(411);
         return c.json({
             message: "Error while fetching the "
+        })
+    }
+})
+
+// deleteing a particular blog from post table using the id of the post 
+blogRouter.get('/delete/:id' , async (c)=>{
+    const id = c.req.param("id");
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    try{
+        const del = await prisma.post.delete({
+            where:{
+                id:Number(id)
+            }
+        })
+
+        return c.json({
+            message:"done !"
+        })
+    }catch(err){
+        c.status(500);
+        return c.json({
+            message:"error while deleting"
         })
     }
 })
