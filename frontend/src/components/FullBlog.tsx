@@ -4,7 +4,7 @@ import { Appbar } from "./Appbar"
 import { Avatar } from "./BlogCard"
 import { BACKEND_URL } from "../config"
 
-import { getUserInfoFromToken } from "../hooks"
+
 import { Link } from "react-router-dom"
 
 
